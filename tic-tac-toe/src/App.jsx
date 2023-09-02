@@ -5,7 +5,7 @@ import { Square } from "./components/Square";
 import { TURNS } from "./constants";
 import { checkWinner, checkEndGame } from "./logic/board";
 import { WinnerModal } from "./components/WinnerModal";
-import { saveGameToStorage, resetGameFromLocalStorage } from "./storage";
+import resetGameFromLocalStorage from "./storage";
 function App() {
   const [board, setBoard] = useState(() => {
     const boardFromStorage = window.localStorage.getItem("board"); // Si esta lectura se hace fuera de aqui en el cuerpo se vuelve muy muy lento.
