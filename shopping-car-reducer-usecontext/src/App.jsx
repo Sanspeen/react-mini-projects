@@ -1,16 +1,20 @@
 import { products as initialProducts } from "./mocks/products.json";
 import { Products } from "./components/Products";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
+import { IS_DEVELOPMENT } from "./config";
+import { FiltersContext } from "./Context/filters";
 
-function App() {
-  const [products] = useState(initialProducts);
-  const [filters, setFilters] = useState({
+// Custom hook
+function useFilters() {
+  /*const [filters, setFilters] = useState({
     category: "all",
     minPrice: 0,
-  });
+  });*/
 
-  const filterProducts = () => {
+  const {filters, setFilters} = useContext(FiltersContext)
+  const filterProducts = (products) => {
     return products.filter((product) => {
       return (
         product.price >= filters.minPrice &&
@@ -18,13 +22,19 @@ function App() {
       );
     });
   };
+  return { filters, filterProducts, setFilters };
+}
 
-  const filteredProducts = filterProducts();
+function App() {
+  const [products] = useState(initialProducts);
+  const { filters, filterProducts, setFilters } = useFilters();
+  const filteredProducts = filterProducts(products);
 
   return (
     <>
-      <Header changeFilters = {setFilters}/>
+      <Header changeFilters={setFilters} />
       <Products products={filteredProducts} />
+      {IS_DEVELOPMENT && <Footer filters={filters} />}
     </>
   );
 }

@@ -10,7 +10,7 @@ export function Products({ products }) {
     }
 
     return (
-    <mian className="products">
+    <main className="products">
       <ul>
         {products.slice(0, 10).map((product) => (
           <li key={product.id}>
@@ -28,6 +28,6 @@ export function Products({ products }) {
           </li>
         ))}
       </ul>
-    </mian>
+    </main>
   );
 }

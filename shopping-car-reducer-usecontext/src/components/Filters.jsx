@@ -1,5 +1,5 @@
 import "./Filters.css";
-import { useState } from "react";
+import { useId, useState } from "react";
 import PropTypes from "prop-types";
 export default function Filters({ onChange }) {
   Filters.propTypes = {
@@ -7,6 +7,10 @@ export default function Filters({ onChange }) {
   };
 
   const [minPrice, setMinPrice] = useState(0);
+
+  const minPriceFilterId = useId();
+  const categoryFilterId = useId();
+
   const handleChangeMinPrice = (event) => {
     setMinPrice(event.target.value);
     onChange((prevState) => ({
@@ -17,10 +21,10 @@ export default function Filters({ onChange }) {
 
   const handleCategoryOnChange = (event) => {
     onChange((prevState) => ({
-        ...prevState,
-        category: event.target.value
-    }))
-  }
+      ...prevState,
+      category: event.target.value,
+    }));
+  };
 
   return (
     <section className="filters">
@@ -28,7 +32,7 @@ export default function Filters({ onChange }) {
         <label htmlFor="price">Precio a partir de:</label>
         <input
           type="range"
-          id="price"
+          id={minPriceFilterId}
           min="0"
           max="1000"
           onChange={handleChangeMinPrice}
@@ -37,7 +41,7 @@ export default function Filters({ onChange }) {
       </div>
       <div>
         <label htmlFor="category">Categoría</label>
-        <select id="category" onChange={handleCategoryOnChange}>
+        <select id={categoryFilterId} onChange={handleCategoryOnChange}>
           <option value="all">Todas</option>
           <option value="laptops">Portátiles</option>
           <option value="smartphones">Celulares</option>
